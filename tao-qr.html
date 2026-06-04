@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tạo mã QR cho bông hoa 🌹</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  body{font-family:"Segoe UI",Arial,sans-serif;margin:0;min-height:100vh;
+    display:flex;align-items:center;justify-content:center;padding:24px;
+    background:radial-gradient(120% 120% at 50% 0%,#9e1f4e,#5e1230 50%,#2a0712);color:#fff0f4;}
+  .card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
+    border-radius:22px;padding:28px;max-width:420px;width:100%;text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);}
+  h1{font-size:22px;margin:0 0 6px;}
+  p{color:#ff9bb3;font-size:14px;line-height:1.5;margin:0 0 18px;}
+  input{width:100%;padding:13px 14px;border-radius:12px;border:none;font-size:15px;margin-bottom:14px;}
+  button{border:none;cursor:pointer;border-radius:12px;padding:13px 22px;font-weight:700;font-size:15px;
+    color:#5e1230;background:linear-gradient(135deg,#ffd9a0,#ff9bb3,#ff4d79);margin:4px;}
+  button:active{transform:scale(.97);}
+  #qr{margin:20px auto 8px;display:inline-block;background:#fff;padding:14px;border-radius:16px;min-height:10px;}
+  small{color:#ffd9a0;display:block;margin-top:8px;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>🌹 Tạo mã QR</h1>
+    <p>Dán đường link bông hoa (link GitHub Pages) vào ô dưới rồi bấm “Tạo QR”. Sau đó tải ảnh QR về để in / gửi cho em.</p>
+    <input id="url" type="text" placeholder="https://ten-cua-ban.github.io/flower-gift/" />
+    <div>
+      <button onclick="gen()">Tạo QR 💗</button>
+      <button onclick="dl()">Tải ảnh QR ⬇</button>
+    </div>
+    <div id="qr"></div>
+    <small id="msg"></small>
+  </div>
+<script>
+let qr=null;
+function gen(){
+  const u=document.getElementById('url').value.trim();
+  const box=document.getElementById('qr');
+  box.innerHTML='';
+  document.getElementById('msg').textContent='';
+  if(!u){document.getElementById('msg').textContent='Hãy dán link vào ô trên nhé!';return;}
+  qr=new QRCode(box,{text:u,width:240,height:240,colorDark:"#a0123e",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.H});
+  document.getElementById('msg').textContent='Xong! Bấm “Tải ảnh QR” để lưu về.';
+}
+function dl(){
+  const img=document.querySelector('#qr img')||document.querySelector('#qr canvas');
+  if(!img){document.getElementById('msg').textContent='Tạo QR trước đã nhé!';return;}
+  let src = img.tagName==='IMG' ? img.src : img.toDataURL('image/png');
+  const a=document.createElement('a'); a.href=src; a.download='qr-bong-hoa.png'; a.click();
+}
+</script>
+</body>
+</html>
